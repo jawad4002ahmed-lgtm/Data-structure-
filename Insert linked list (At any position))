@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node *next;
+};
+int size=0;
+
+void insert(struct node **head, int data){
+    struct node *newNode=(struct node*)malloc(sizeof(struct node));
+    newNode->data=data;
+    newNode->next=*head;
+    *head=newNode;
+    size++;
+}
+
+void insertPosition(int pos,int data,struct node **head){
+    struct node *newNode=(struct node*)malloc(sizeof(struct node));
+    newNode->data=data;
+    newNode->next=NULL;
+    if(pos<1 || pos>size+1){
+        printf("Invalid\n");
+    }
+    else if(pos==1){
+        newNode->next=*head;
+        *head=newNode;
+        size++;
+    }
+    else{
+        struct node *temp=*head;
+        while(--pos>1){
+            temp=temp->next;
+            }
+            newNode->next=temp->next;
+            temp->next=newNode;
+            size++;
+    }
+}
+
+void printList(struct node *node){
+
+    printf("Linked list: ");
+    while(node!=NULL){
+        printf("%d->",node->data);
+        node=node->next;
+    }
+    printf("NULL\n");
+}
+
+int main(){
+struct node *head=NULL;
+insert(&head,70);
+insert(&head,30);
+insert(&head,40);
+insert(&head,60);
+insert(&head,100);
+
+printList(head);
+
+insertPosition(2,20,&head);
+insertPosition(5,50,&head);
+insertPosition(8,80,&head);
+
+printList(head);
+
+return 0;
+}
