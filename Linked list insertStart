@@ -23,11 +23,19 @@ void printList(struct node* head){
     printf("NULL\n");
 }
 
+
 int main(){
+int dataToInsert;
 struct node* head=NULL;
 addFirst(&head,10);
 addFirst(&head,20);
 addFirst(&head,30);
+
+    printf("Enter data to insert at the beginning: ");
+    scanf("%d", &dataToInsert);
+    addFirst(&head, dataToInsert);
+    printf("List after first insertion: ");
+
 
 printList(head);
 
