@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+	int data;          
+	struct node* next;  
+} node;
+
+node* createNode(int data);
+node* createList(int nodeCount);
+void traverseList(node* head);
+void freeList(node* head);
+
+int main()
+{
+	int totalNode;
+	node *head;
+
+	printf("Enter the total number of nodes: ");
+	scanf("%d", &totalNode);
+
+	head = createList(totalNode);
+
+	printf("\nData in the list \n");
+	traverseList(head);
+	
+	freeList(head);
+
+	return 0;
+}
+
+node* createNode(int data)
+{
+	
+	node* newNode = (node*) malloc(sizeof(node));
+
+	if (newNode == NULL)
+	{
+		printf("Memory allocation failed!");
+		exit(1);
+	}
+
+
+	newNode->data = data;
+	newNode->next = NULL;
+
+	return newNode;
+}
+
+node* createList(int nodeCount)
+{
+	node *head = NULL, *newNode = NULL, *prevNode = NULL;
+	int data, counter;
+
+	if (nodeCount <= 0)
+	{
+		printf("No nodes to create");
+		return head;
+	}
+
+	for (counter = 1; counter <= nodeCount; counter++)
+	{
+		printf("Input data at node %d: ", counter);
+		scanf("%d", &data);
+
+		newNode = createNode(data);
+
+		if (prevNode != NULL)
+		{
+
+			prevNode->next = newNode;
+		}
+
+		prevNode = newNode;
+
+		if (counter == 1)
+		{
+			head = newNode;
+		}
+	}
+
+	return head;
+}
+
+
+
+void traverseList(node* head)
+{
+	node* current = head;  
+	while (current != NULL)
+	{
+		printf("%d -> ", current->data);
+		current = current->next; 
+	}
+	printf("\n");
+}
+ 
+void freeList(node* head) 
+{
+    printf("Clearing memory!");
+    
+    node* current;
+    while (head != NULL) 
+    {
+        current = head;
+        head = head->next;
+        
+        free(current);
+    }
+}
